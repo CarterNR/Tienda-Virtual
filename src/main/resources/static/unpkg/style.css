@@ -1,0 +1,47 @@
+*{
+    maring: 0;
+    box-sizing: border-box;
+}
+
+.content{
+    aling-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+header{
+    background: #4EE8FA;
+    color: white;
+    height: fit-content;
+    padding: 10px;
+    width: 100%;
+}
+
+nav{
+    aling-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.home{
+    font-size: 40px;
+}
+
+ul{
+    display: flex;
+    list-style: none;
+}
+
+li{
+    padding: 10px;
+}
+
+.nombreP{
+    color: #B6BBBC;
+}
