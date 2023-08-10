@@ -11,11 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface RegistroService {
 
+    // Activa un usuario y actualiza el modelo con los resultados
     public Model activar(Model model, String usuario, String clave);
 
+    // Crea un nuevo usuario y actualiza el modelo con los resultados
     public Model crearUsuario(Model model, Usuario usuario) throws MessagingException;
     
+    // Activa un usuario y carga una imagen asociada
     public void activar(Usuario usuario, MultipartFile imagenFile);
     
+    // Envía un recordatorio al usuario y actualiza el modelo con los resultados
     public Model recordarUsuario(Model model, Usuario usuario) throws MessagingException;
 }

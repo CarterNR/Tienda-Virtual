@@ -24,6 +24,7 @@ public class UsuarioController {
 
     @GetMapping("/listado")
     public String listado(Model model) {
+        // Obtiene la lista de usuarios y la agrega al modelo para la vista
         var usuarios = usuarioService.getUsuarios();
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("totalUsuarios", usuarios.size());
@@ -32,7 +33,7 @@ public class UsuarioController {
 
     @GetMapping("/nuevo")
     public String usuarioNuevo(Usuario usuario) {
-        return "/usuario/modifica";
+        return "/usuario/modifica"; // Devuelve la vista del formulario para nuevo usuario
     }
 
     @Autowired
@@ -41,6 +42,7 @@ public class UsuarioController {
     @PostMapping("/guardar")
     public String usuarioGuardar(Usuario usuario,
             @RequestParam("imagenFile") MultipartFile imagenFile) {
+        // Guarda un usuario y carga una imagen si se proporciona
         if (!imagenFile.isEmpty()) {
             usuarioService.save(usuario,false);
             usuario.setRutaImagen(
@@ -50,7 +52,7 @@ public class UsuarioController {
                             usuario.getIdUsuario()));
         }
         usuarioService.save(usuario,true);
-        return "redirect:/usuario/listado";
+        return "redirect:/usuario/listado";// Redirige a la lista de usuarios
     }
 
     @GetMapping("/eliminar/{idUsuario}")

@@ -5,16 +5,15 @@ import java.util.List;
 
 public interface CategoriaService {
     
-    // Se obtiene un listado de categorias en un List
+    // Obtiene una lista de categorías con opción de filtrar por activos
     public List<Categoria> getCategorias(boolean activos);
     
-    //Se obtiene un Categoria, apartir del id de un categoria
+    // Obtiene una categoría a partir de su objeto categoría
     public Categoria getCategoria(Categoria categoria);
     
-    //Se inserta un nuevo Categoria si el id categoria esta vacio
-    //Se actualiza un categoria si el id de categoria NO esta vacio
+    // Guarda una nueva categoría si el id está vacío, o actualiza una existente
     public void save (Categoria categoria);
     
-    //Se elimina el categoria que tiene el id pasado por parametro 
+    // Elimina una categoría basada en su objeto categoría
     public void delete (Categoria categoria);
 }

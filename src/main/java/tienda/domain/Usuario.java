@@ -28,32 +28,27 @@ public class Usuario implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long idUsuario;
+    private Long idUsuario;// Identificador único del usuario
 
     @NotEmpty
 
-    private String username;
+    private String username;// Nombre de usuario
 
     @NotEmpty
 
-    private String password;
-
-    private String nombre;
-
-    private String apellidos;
-
-    private String correo;
-
-    private String telefono;
-
-    private String rutaImagen;
-
-    private boolean activo;
+    private String password;  // Contraseña
+    
+    private String nombre;  // Nombre del usuario
+    private String apellidos;  // Apellidos del usuario
+    private String correo;  // Correo electrónico del usuario
+    private String telefono;  // Número de teléfono del usuario
+    private String rutaImagen;  // Ruta de la imagen del usuario
+    private boolean activo;  // Indica si el usuario está activo
 
     @OneToMany
 
     @JoinColumn(name = "id_usuario")
 
-    private List<Rol> roles;
+    private List<Rol> roles;// Roles asociados al usuario
 
 }

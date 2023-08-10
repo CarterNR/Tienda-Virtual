@@ -27,11 +27,12 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class ProjectConfig implements WebMvcConfigurer {
 
-    /* Los siguientes métodos son para incorporar el tema de internacionalización en el proyecto */
+    // Configuración para manejar diferentes idiomas en el proyecto
 
- /* localeResolver se utiliza para crear una sesión de cambio de idioma*/
+    // Configuración para cambiar el idioma en cada sesión
     @Bean
     public SessionLocaleResolver localeResolver() {
+        // Configura cómo se cambia el idioma en cada sesión
         var slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.getDefault());
         slr.setLocaleAttributeName("session.current.locale");
@@ -39,9 +40,10 @@ public class ProjectConfig implements WebMvcConfigurer {
         return slr;
     }
 
-    /* localeChangeInterceptor se utiliza para crear un interceptor de cambio de idioma*/
+    // Configuración para detectar y cambiar el idioma en la URL
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
+        // Configura cómo detectar y cambiar el idioma en la URL
         var lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
@@ -49,12 +51,14 @@ public class ProjectConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registro) {
+         // Agrega el cambio de idioma a la configuración general
         registro.addInterceptor(localeChangeInterceptor());
     }
 
-    //Bean para poder acceder a los Messages.properties en código...
+    // Configuración para manejar mensajes en diferentes idiomas
     @Bean("messageSource")
     public MessageSource messageSource() {
+         // Configura dónde se encuentran los mensajes en diferentes idiomas
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -63,16 +67,18 @@ public class ProjectConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        // Configura cómo se manejan las vistas en ciertas direcciones
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/registro/nuevo").setViewName("/registro/nuevo");
     }
-
+    
+    // Configuración para la seguridad en el proyecto
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((request) -> request
+                .authorizeHttpRequests((request) -> request // Configura quiénes pueden acceder a diferentes partes del proyecto
                 .requestMatchers("/", "/index", "/errores/**",
                         "/carrito/**", "/pruebas/**", "/reportes/**",
                         "/registro/**", "/js/**", "/webjars/**")
@@ -94,16 +100,16 @@ public class ProjectConfig implements WebMvcConfigurer {
                 .requestMatchers("/facturar/carrito")
                 .hasRole("USER")
                 )
-                .formLogin((form) -> form
+                .formLogin((form) -> form // Configura cómo se ve y funciona la página de inicio de sesión
                 .loginPage("/login").permitAll())
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout.permitAll()); // Configura cómo se cierra la sesión
         return http.build();
     }
 
-    /* El siguiente método se utiliza para completar la clase no es 
-    realmente funcional, la próxima semana se reemplaza con usuarios de BD */
+    // Configura detalles de usuarios (aquí usando usuarios en memoria)
     @Bean
     public UserDetailsService users() {
+        // Crea diferentes usuarios con diferentes roles
         UserDetails admin = User.builder()
                 .username("juan")
                 .password("{noop}123")
@@ -126,6 +132,7 @@ public class ProjectConfig implements WebMvcConfigurer {
     private UserDetailsService userDetailsService;
     @Autowired
     public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
+        // Configura cómo se manejan los detalles de inicio de sesión y las contraseñas
         build.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 }

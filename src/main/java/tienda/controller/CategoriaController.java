@@ -23,14 +23,15 @@ public class CategoriaController {
 
     @GetMapping("/listado")
     public String inicio(Model model) {
+        // Obtiene la lista de categorías y la agrega al modelo para la vista
         var categorias = categoriaService.getCategorias(false);
         model.addAttribute("categorias", categorias);
         model.addAttribute("totalCategorias", categorias.size());
-        return "/categoria/listado";
+        return "/categoria/listado";// Devuelve la vista de listado de categorías
     }
     @GetMapping("/nuevo")
     public String categoriaNuevo(Categoria categoria) {
-        return "/categoria/modifica";
+        return "/categoria/modifica";// Devuelve la vista de formulario para nueva categoría
     }
 
     @Autowired
@@ -38,7 +39,8 @@ public class CategoriaController {
     
     @PostMapping("/guardar")
     public String categoriaGuardar(Categoria categoria,
-            @RequestParam("imagenFile") MultipartFile imagenFile) {        
+            @RequestParam("imagenFile") MultipartFile imagenFile) {  
+        // Guarda la categoría y carga una imagen si se proporciona
         if (!imagenFile.isEmpty()) {
             categoriaService.save(categoria);
             categoria.setRutaImagen(
@@ -48,19 +50,21 @@ public class CategoriaController {
                             categoria.getIdCategoria()));
         }
         categoriaService.save(categoria);
-        return "redirect:/categoria/listado";
+        return "redirect:/categoria/listado";// Redirige a la lista de categorías
     }
 
     @GetMapping("/eliminar/{idCategoria}")
     public String categoriaEliminar(Categoria categoria) {
+        // Elimina una categoría y redirige a la lista de categorías
         categoriaService.delete(categoria);
         return "redirect:/categoria/listado";
     }
 
     @GetMapping("/modificar/{idCategoria}")
     public String categoriaModificar(Categoria categoria, Model model) {
+        // Obtiene una categoría y la agrega al modelo para el formulario de modificación
         categoria = categoriaService.getCategoria(categoria);
         model.addAttribute("categoria", categoria);
-        return "/categoria/modifica";
+        return "/categoria/modifica";// Devuelve la vista de formulario de modificación
     }
 }

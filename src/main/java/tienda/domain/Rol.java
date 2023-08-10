@@ -21,11 +21,11 @@ public class Rol {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRol;
+    private Long idRol;// Identificador único del rol
     
     @NotEmpty
-    private String nombre;
+    private String nombre;// Nombre del rol
     
     @Column(name = "id_usuario")
-    private Long idUsuario;
+    private Long idUsuario;// Identificador del usuario asociado al rol
 }

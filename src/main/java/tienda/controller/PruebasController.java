@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tienda.domain.Categoria;
+import tienda.service.ProductoService;
 
-/*
+
 @Controller
 @RequestMapping("/pruebas")
 public class PruebasController {
@@ -26,29 +27,32 @@ public class PruebasController {
     
     @GetMapping("/listado")
     public String listado(Model model){
+        // Obtiene la lista de productos y categorías para mostrar en la vista
         var productos = productoService.getProductos(false);
         var categorias = categoriaService.getCategorias(false);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
         model.addAttribute("categorias", categorias);
-        return "/pruebas/listado";
+        return "/pruebas/listado";// Devuelve la vista de listado de pruebas
     }
     
     @GetMapping("/listado/{idCategoria}")
     public String listado(Model model, Categoria categoria){
+        // Obtiene productos de una categoría específica y muestra en la vista
         var productos = categoriaService.getCategoria(categoria).getProductos();
         var categorias = categoriaService.getCategorias(false);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
         model.addAttribute("categorias", categorias);
-        return "/pruebas/listado";
+        return "/pruebas/listado";// Devuelve la vista de listado de pruebas
     }
     //Los métodos siguientes son para la prueba de consultas ampliadas
     @GetMapping("/listado2")
     public String listado2(Model model) {
+        // Obtiene productos para una consulta y muestra en la vista
         var productos = productoService.getProductos(false);
         model.addAttribute("productos", productos);
-        return "/pruebas/listado2";
+        return "/pruebas/listado2";// Devuelve la vista de listado de pruebas 2
     }
 
     @PostMapping("/query1")
@@ -82,4 +86,4 @@ public class PruebasController {
         model.addAttribute("precioSup", precioSup);
         return "/pruebas/listado2";
     }
-}*/
+}

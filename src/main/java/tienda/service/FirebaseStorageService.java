@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface FirebaseStorageService {
+     // Carga una imagen en el almacenamiento de Firebase usando un archivo local, una carpeta y un ID
     public String cargaImagen(MultipartFile archivoLocalCliente, String carpeta, Long id);
+    
+    // Constantes para el nombre del bucket, rutas y nombre de archivo JSON de Firebase
     final String BucketName = "loom-ca57c.appspot.com";
     final String rutaSuperiorStorage = "Loom";
     final String rutaJsonFile = "firebase";

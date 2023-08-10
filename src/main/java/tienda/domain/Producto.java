@@ -19,17 +19,17 @@ public class Producto implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_producto")
-    private Long idProducto;
-    private String descripcion;
-    private String detalle;
-    private double precio;
-    private int existencias;
-    private String rutaImagen;
-    private boolean activo;
+    private Long idProducto; // Identificador único del producto
+    private String descripcion;// Descripción del producto
+    private String detalle;// Detalle o información adicional sobre el producto
+    private double precio;// Precio del producto
+    private int existencias;// Cantidad disponible del producto
+    private String rutaImagen;// Ruta de la imagen del producto
+    private boolean activo;// Indica si el producto está activo
     
     @ManyToOne
     @JoinColumn(name="id_categoria")
-    Categoria categoria;
+    Categoria categoria;// Categoría a la que pertenece el producto
     
     public void Producto(){
     }

@@ -29,17 +29,20 @@ public class RegistroController {
 
     @GetMapping("/nuevo")
     public String nuevo(Model model, Usuario usuario) {
+        // Prepara la vista para registrar un nuevo usuario
         return "/registro/nuevo";
     }
 
     @GetMapping("/recordar")
     public String recordar(Model model, Usuario usuario) {
+        // Prepara la vista para recordar la contraseña
         return "/registro/recordar";
     }
 
     @PostMapping("/crearUsuario")
     public String crearUsuario(Model model, Usuario usuario) 
             throws MessagingException {
+        // Crea un nuevo usuario y prepara la vista de salida
         model = registroService.crearUsuario(model, usuario);
         return "/registro/salida";
     }

@@ -6,6 +6,7 @@ package tienda.service;
 import jakarta.mail.MessagingException;
 
 public interface CorreoService {
+    // Envía un correo HTML con la dirección de destino, asunto y contenido especificados
     public void enviarCorreoHtml(
             String para, 
             String asunto, 
