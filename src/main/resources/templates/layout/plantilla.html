@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
     <head th:fragment="head">
         <title>TechShop</title>
         <meta charset="UTF-8"/>
@@ -18,10 +19,10 @@
                         <span class="navbar-toggler-icon"></span> 
                     </button> 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse"> 
-                        <ul class="navbar-nav"> 
+                        <ul class="navbar-nav" sec:autorizar="hasRole('ROLE_ADMIN') o hasRole('ROLE_VENDEDOR')"> 
                             <li class="nav-item px-2"><a class="nav-menu-link nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a></li> 
                             <li class="nav-item px-2"><a class="nav-menu-link nav-link" th:href="@{/producto/listado}">[[#{plantilla.productos}]]</a></li> 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" sec:autorizar="hasRole('ROLE_ADMIN')">
                                 <a class="nav-link dropdown-toggle"
                                    data-bs-toggle="dropdown"
                                    href="#"
@@ -29,7 +30,8 @@
                                    aria-expanded="false">[[#{plantilla.pruebas}]]</a>
                                 <ul class="dropdown-menu dropdown-menu-dark2"> 
                                     <li><a class="dropdown-item" th:tref="@{/pruebas/listado}">[[#{plantilla.asociaciones}]]</a></li>
-                                    <li><a class="dropdown-item" th:href="@(/pruebas/consulta)">[[#(plantilla.consultas)]]</a></1i>
+                                    <li><a class="dropdown-item" th:href="@(/pruebas/consulta)">[[#(plantilla.consultas)]]</a></li>
+                                    <li><a class="dropdown-item" th:href="@(/usuario/listado)">[[#(plantilla.usuarios)]]</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item px-2"><a class="nav-menu-link nav-link" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a></li> 
@@ -39,6 +41,19 @@
                                 <li class="nav-item px-2"><a class="nav-link" th:href="@{/(lang=es)}">ES</a></li> 
                                 <li class="nav-item px-2"><a class="nav-link" th:href="@{/(lang=en)}">EN</a></li> 
                             </ul> 
+                            <ul class="navbar-nav" sec:authorize="isAuthenticated()">
+                                <li class="nav-item text-white my-auto">
+                                    <i class="fas fa-usuarios"></i>
+                                    <span sec:autenticación="nombre">Bob</span>
+                                </li>
+                                <li class="nav-item my-auto">
+                                    <form method="post" th:action="@{/logout}">
+                                        <button class="btn btn-oscuro">
+                                            <li class="fas fa-sign-out-alt"></li>
+                                        </botón>
+                                    </form>
+                                </li>
+                            </ul>
                         </div> 
                     </div> 
                 </div> 
