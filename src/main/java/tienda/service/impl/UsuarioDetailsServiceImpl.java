@@ -25,17 +25,13 @@ import tienda.service.UsuarioDetailsService;
 public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDetailsService {
 
     @Autowired
-
     private UsuarioDao usuarioDao;
 
     @Autowired
-
     private HttpSession session;
-
+    
     @Override
-
     @Transactional(readOnly = true)
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         //Busca el usuario por el username en la tabla
@@ -44,14 +40,18 @@ public class UsuarioDetailsServiceImpl implements UsuarioDetailsService, UserDet
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
+
         session.removeAttribute("usuarioImagen");
         session.setAttribute("usuarioImagen", usuario.getRutaImagen());
+
         //Si está acá es porque existe el usuario... sacamos los roles que tiene
         var roles = new ArrayList<GrantedAuthority>();
         for (Rol rol : usuario.getRoles()) {   //Se sacan los roles
             roles.add(new SimpleGrantedAuthority(rol.getNombre()));
         }
+
         //Se devuelve User (clase de userDetails)
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
+
 }

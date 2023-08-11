@@ -30,7 +30,7 @@ public class ProductoController {
 
         return "/producto/listado";// Devuelve la vista de listado de productos
     }
-    }
+    
 
     @GetMapping("/producto/nuevo")
     public String nuevoProducto(Producto producto, Model model) {

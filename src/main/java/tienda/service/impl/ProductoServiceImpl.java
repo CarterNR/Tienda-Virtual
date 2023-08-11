@@ -49,7 +49,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @Transactional(readOnly = true)
     public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
-        return productoDao. findByPrecioBetweenOrderByDescription(precioInf, precioSup);
+        return productoDao. findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
     }
 
     @Override

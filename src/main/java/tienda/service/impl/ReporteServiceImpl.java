@@ -38,7 +38,7 @@ public class ReporteServiceImpl implements ReporteService {
     DataSource datasource;
     
     @Override
-    public ResponseEntity<Resource> generaReporte(
+    public ResponseEntity<Resource> generateReporte(
             String reporte,
             Map<String, Object> parametros,
             String tipo) throws IOException {

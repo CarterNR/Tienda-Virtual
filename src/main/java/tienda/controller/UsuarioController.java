@@ -7,6 +7,7 @@ import tienda.domain.Usuario;
 import tienda.service.UsuarioService;
 import tienda.service.FirebaseStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import tienda.service.impl.FirebaseStorageServiceImpl;
 
 @Controller
 @RequestMapping("/usuario")
@@ -21,9 +23,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private FirebaseStorageServiceImpl firebaseStorageService;
 
     @GetMapping("/listado")
-    public String listado(Model model) {
+    public String inicio(Model model) {
         // Obtiene la lista de usuarios y la agrega al modelo para la vista
         var usuarios = usuarioService.getUsuarios();
         model.addAttribute("usuarios", usuarios);
@@ -36,12 +41,11 @@ public class UsuarioController {
         return "/usuario/modifica"; // Devuelve la vista del formulario para nuevo usuario
     }
 
-    @Autowired
-    private FirebaseStorageService firebaseStorageService;
-
     @PostMapping("/guardar")
     public String usuarioGuardar(Usuario usuario,
             @RequestParam("imagenFile") MultipartFile imagenFile) {
+        var codigo = new BCryptPasswordEncoder();
+        usuario.setPassword(codigo.encode(usuario.getPassword()));
         // Guarda un usuario y carga una imagen si se proporciona
         if (!imagenFile.isEmpty()) {
             usuarioService.save(usuario,false);
@@ -52,7 +56,7 @@ public class UsuarioController {
                             usuario.getIdUsuario()));
         }
         usuarioService.save(usuario,true);
-        return "redirect:/usuario/listado";// Redirige a la lista de usuarios
+        return "redirect:/"; // Redirige a la lista de usuarios
     }
 
     @GetMapping("/eliminar/{idUsuario}")

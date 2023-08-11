@@ -11,23 +11,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
-@Entity
 @Data
-@Table(name = "rol")
-
-public class Rol implements Serializable{
+@Entity
+@Table(name="venta")
+public class Venta implements Serializable {    
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRol;// Identificador único del rol
+    @Column(name="id_venta")
+    private Long idVenta;
+    private Long idFactura;
+    private Long idProducto;    
+    private double precio;
+    private int cantidad;    
     
-    @NotEmpty
-    private String nombre;// Nombre del rol
-    
-    @Column(name = "id_usuario")
-    private Long idUsuario;// Identificador del usuario asociado al rol
+    public Venta() {
+    }
+
+    public Venta(Long idFactura, Long idProducto, double precio, int cantidad) {
+        this.idFactura = idFactura;
+        this.idProducto = idProducto;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
 }

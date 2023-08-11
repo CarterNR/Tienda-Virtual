@@ -14,6 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
+import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Entity
@@ -21,23 +22,17 @@ import lombok.Data;
 @Table(name = "usuario")
 
 public class Usuario implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long idUsuario;// Identificador único del usuario
-
+    
     @NotEmpty
-
     private String username;// Nombre de usuario
 
     @NotEmpty
-
     private String password;  // Contraseña
-    
     private String nombre;  // Nombre del usuario
     private String apellidos;  // Apellidos del usuario
     private String correo;  // Correo electrónico del usuario
@@ -46,9 +41,7 @@ public class Usuario implements Serializable {
     private boolean activo;  // Indica si el usuario está activo
 
     @OneToMany
-
     @JoinColumn(name = "id_usuario")
-
     private List<Rol> roles;// Roles asociados al usuario
 
 }

@@ -31,7 +31,7 @@ public class Producto implements Serializable{
     @JoinColumn(name="id_categoria")
     Categoria categoria;// Categoría a la que pertenece el producto
     
-    public void Producto(){
+    public Producto(){
     }
     
     public Producto(String descripcion, String detalle, double precio, int existencias, String imagen, boolean activo){

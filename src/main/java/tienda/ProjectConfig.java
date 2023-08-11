@@ -74,6 +74,38 @@ public class ProjectConfig implements WebMvcConfigurer {
         registry.addViewController("/registro/nuevo").setViewName("/registro/nuevo");
     }
     
+    
+
+    // Configura detalles de usuarios (aquí usando usuarios en memoria)
+    /*@Bean
+    public UserDetailsService users() {
+        // Crea diferentes usuarios con diferentes roles
+        UserDetails admin = User.builder()
+                .username("juan")
+                .password("{noop}123")
+                .roles("USER", "VENDEDOR", "ADMIN")
+                .build();
+        UserDetails sales = User.builder()
+                .username("rebeca")
+                .password("{noop}456")
+                .roles("USER", "VENDEDOR")
+                .build();
+        UserDetails user = User.builder()
+                .username("pedro")
+                .password("{noop}789")
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(user, sales, admin);
+    }*/
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
+        // Configura cómo se manejan los detalles de inicio de sesión y las contraseñas
+        build.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+    
     // Configuración para la seguridad en el proyecto
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -82,7 +114,7 @@ public class ProjectConfig implements WebMvcConfigurer {
                 .requestMatchers("/", "/index", "/errores/**",
                         "/carrito/**", "/pruebas/**", "/reportes/**",
                         "/registro/**", "/js/**", "/webjars/**")
-                .permitAll()
+                        .permitAll()
                 .requestMatchers(
                         "/producto/nuevo", "/producto/guardar",
                         "/producto/modificar/**", "/producto/eliminar/**",
@@ -104,35 +136,5 @@ public class ProjectConfig implements WebMvcConfigurer {
                 .loginPage("/login").permitAll())
                 .logout((logout) -> logout.permitAll()); // Configura cómo se cierra la sesión
         return http.build();
-    }
-
-    // Configura detalles de usuarios (aquí usando usuarios en memoria)
-    @Bean
-    public UserDetailsService users() {
-        // Crea diferentes usuarios con diferentes roles
-        UserDetails admin = User.builder()
-                .username("juan")
-                .password("{noop}123")
-                .roles("USER", "VENDEDOR", "ADMIN")
-                .build();
-        UserDetails sales = User.builder()
-                .username("rebeca")
-                .password("{noop}456")
-                .roles("USER", "VENDEDOR")
-                .build();
-        UserDetails user = User.builder()
-                .username("pedro")
-                .password("{noop}789")
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user, sales, admin);
-    }
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
-        // Configura cómo se manejan los detalles de inicio de sesión y las contraseñas
-        build.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 }
